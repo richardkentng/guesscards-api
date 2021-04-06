@@ -1,7 +1,10 @@
 console.log('##########  MODELS/INDEX.JS  - CONNECT TO MONGOOSE ########');
+
 require('dotenv').config()
+
 const mongoose = require("mongoose");
 
+const connectionString = process.env.MONGODB_URI
 const configOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -10,11 +13,10 @@ const configOptions = {
 };
 
 mongoose
-  .connect(process.env.MONGODB_URI, configOptions)
+  .connect(connectionString, configOptions)
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(`MongoDB connection error: ${err}`));
 
-// module.exports = {
-//   Game: require("./game"),
-//   User: require("./User"),
-// };
+module.exports = {
+  User: require("./user"),
+};
