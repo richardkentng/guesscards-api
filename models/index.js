@@ -18,5 +18,7 @@ mongoose
   .catch((err) => console.log(`MongoDB connection error: ${err}`));
 
 module.exports = {
-  User: require("./user"),
+  User: require("./User"),
+  Set: require("./Set"),
+  Card: require("./Card")
 };
