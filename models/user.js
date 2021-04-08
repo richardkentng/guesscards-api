@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    set: [{
+    sets: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Set'
     }]
-})
+}, {timestamps: true})
 
 
 const User = mongoose.model('User', userSchema)
