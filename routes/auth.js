@@ -81,6 +81,20 @@ Router.post('/login', async (req, res) => {
 })
 
 
+Router.get('/verify', (req, res) => {
+    const bearerHeader = req.headers["authorization"]
+    if (!bearerHeader) return res.status(400).json({msg: 'bearer header does not exist. Token cant possibly be verified.'})
+
+    const token = bearerHeader.split(" ")[1]
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
+        if (err) return console.log('Error in auth/: Invalid Token.');
+        // console.log('WILL SUCCESSFULLY VERIFY TOKEN FOR NAVBAR!');
+        res.json({status: 200, msg: 'Successfully verified token for navbar!', userData: {_id: payload._id, username: payload.username}})
+    })
+    //console.log('i found the token that the front end sent!:', token);
+
+})
+
 
 
 module.exports = Router
