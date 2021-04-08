@@ -11,5 +11,6 @@ app.use(cors())
 
 //ROUTES
 app.use('/auth', require('./routes/auth'))
+app.use('/sets', require('./routes/sets'))
 
 app.listen(4000, () => {console.log('listening to port 4000');})
