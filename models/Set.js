@@ -11,7 +11,7 @@ const setSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    card: [{
+    cards: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Card'
     }]
