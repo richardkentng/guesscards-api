@@ -1,5 +1,15 @@
 const mongoose = require('mongoose')
 
+const cardSchema = {
+    ques: {
+        type: String,
+        required: true
+    },
+    ans: {
+        type: String,
+        required: true
+    }
+}
 
 const setSchema = new mongoose.Schema({
     name: {
@@ -11,10 +21,7 @@ const setSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    cards: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Card'
-    }]
+    cards: [cardSchema]
 })
 
 const Set = mongoose.model('Set', setSchema)
