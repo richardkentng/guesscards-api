@@ -20,5 +20,5 @@ mongoose
 module.exports = {
   User: require("./User"),
   Set: require("./Set"),
-  Card: require("./Card")
+  // Card: require("./Card")
 };
