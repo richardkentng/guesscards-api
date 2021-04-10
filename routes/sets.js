@@ -30,6 +30,17 @@ Router.get('/:id', authRequired, (req, res) => {
     })
 })
 
+//edit set's name
+Router.put('/:id', authRequired, async (req, res) => {
+    try {
+        const updatedSet = await Set.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true})
+        res.json({set: updatedSet})
+
+    } catch(err) {
+        if (err) res.json({err, msg: 'error trying to update set name'})
+    }
+})
+
 
 Router.post('/', authRequired, (req, res) => {
 
