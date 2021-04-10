@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const express = require('express')
 const { json } = require('express')
 const Router = express.Router()
+const db = require('../models')
 
 
 
@@ -15,7 +16,7 @@ Router.post('/signup', async (req, res) => {
     username = username.toLowerCase()
 
     // CHECK IF USERNAME ALREADY EXISTS
-    const foundUser = await User.findOne({username})
+    const foundUser = await db.User.findOne({username})
     if (foundUser) return res.json({status: 409, msg: 'That username already exists!'})
 
     //HASH THE PASSWORD
@@ -23,7 +24,7 @@ Router.post('/signup', async (req, res) => {
     if (!hash) return res.json({status: 500, msg: 'Failed to hash the password for a new signup'})
 
 
-    User.create({username, password:hash}, (err, createdUser) => {
+    db.User.create({username, password:hash}, (err, createdUser) => {
         if (err) return res.json({status: 500, msg: 'error occured while trying to create user. Refresh page and try again.', error: err})
         if (!createdUser) return res.json({status: 500, msg: 'failed to create a user in signup route'})
 
@@ -56,7 +57,7 @@ Router.post('/login', async (req, res) => {
     username = username.toLowerCase()
 
     //CHECK IF USERNAME ALEADY EXISTS
-    const foundUser = await User.findOne({username})
+    const foundUser = await db.User.findOne({username})
     if (!foundUser) return res.json({status: 400, msg: 'That username does not exist!'})
 
     //CHECK IF PASSWORD IS CORRECT
