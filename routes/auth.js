@@ -4,7 +4,7 @@ const express = require('express')
 const { json } = require('express')
 const Router = express.Router()
 
-const User = require('../models/User')
+const User = require('../models/User.js')
 
 
 
