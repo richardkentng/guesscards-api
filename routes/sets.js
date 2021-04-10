@@ -38,6 +38,18 @@ Router.get('/:id', authRequired, (req, res) => {
     })
 })
 
+// create a set
+Router.post('/', authRequired, (req, res) => {
+
+    Set.create({name: req.body.name, user: req.userId}, (err, createdSet) => {
+        if (err) return res.json({status: 500, err, msg: 'probably failed to create set for user'})
+        if (!createdSet) return res.json({status: 500, msg: 'failed to create set for user'})
+        // console.log('createdSet: ', createdSet);
+        res.json({set: createdSet})
+    })
+    
+})
+
 //edit set's name
 Router.put('/:id', authRequired, async (req, res) => {
     try {
@@ -49,17 +61,19 @@ Router.put('/:id', authRequired, async (req, res) => {
     }
 })
 
+//delete set
+Router.delete('/:id', authRequired, async (req, res) => {
+    console.log(' you are trying to delete a set!');
+    try {
+        const setToDelete = await Set.findByIdAndDelete(req.params.id)
+        res.json({set: setToDelete})
 
-Router.post('/', authRequired, (req, res) => {
-
-    Set.create({name: req.body.name, user: req.userId}, (err, createdSet) => {
-        if (err) return res.json({status: 500, err, msg: 'probably failed to create set for user'})
-        if (!createdSet) return res.json({status: 500, msg: 'failed to create set for user'})
-        // console.log('createdSet: ', createdSet);
-        res.json({set: createdSet})
-    })
-    
+    } catch(err) {
+        if (err) res.json({err, msg: 'error trying to delete set'})
+    }
 })
+
+
 
 /*****************************************
                 FLASHCARDS
