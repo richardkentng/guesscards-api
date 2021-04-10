@@ -1,7 +1,5 @@
 console.log('##########  MODELS/INDEX.JS  - CONNECT TO MONGOOSE ########');
 
-require('dotenv').config()
-
 const mongoose = require("mongoose");
 
 const connectionString = process.env.MONGODB_URI
@@ -16,3 +14,8 @@ mongoose
   .connect(connectionString, configOptions)
   .then(() => console.log("MongoDB successfully connected..."))
   .catch((err) => console.log(`MongoDB connection error: ${err}`))
+
+  module.exports = {
+    User: require('./User'),
+    Set: require('./Set')
+  }
