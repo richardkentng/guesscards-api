@@ -8,6 +8,10 @@ const cardSchema = {
     ans: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 }
 
@@ -20,6 +24,10 @@ const setSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
     cards: [cardSchema]
 })
