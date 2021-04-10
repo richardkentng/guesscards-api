@@ -17,6 +17,14 @@ Router.get('/', authRequired, (req, res) => {
     })
 })
 
+Router.get('/1', (req, res) => {
+
+    Set.find({}, (err, foundSets) => {
+        if (err) return res.json({msg: 'error finding all sets', err})
+        return res.json({sets: foundSets})
+    })
+})
+
 
 //set show page (see all cards for a set!)
 Router.get('/:id', authRequired, (req, res) => {
