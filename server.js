@@ -1,13 +1,9 @@
-const db = require('./models')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 require('dotenv').config()
-
 const cors = require('cors')
 const express = require('express')
-const app = express()
 
 const port = process.env.PORT || 4000
+const app = express()
 
 app.use(express.json())
 app.use(cors())
