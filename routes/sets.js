@@ -81,10 +81,13 @@ Router.delete('/:id', authRequired, async (req, res) => {
 
 //create flashcard for set
 Router.post('/:id/cards', authRequired, async (req, res) => {
+    const {ques, ans} = req.body
+    if (!ques || !ans) return res.status(400).json({msg: 'New question and answer must be non-empty string.', ques, ans})
     try {
         const foundSet =  await Set.findById(req.params.id)
         foundSet.cards.push(req.body)
         await foundSet.save()
+        console.log('created flashcard:', foundSet.cards[foundSet.cards.length - 1]);
         return res.json({card: foundSet.cards[foundSet.cards.length - 1]})
 
     } catch (error) {
