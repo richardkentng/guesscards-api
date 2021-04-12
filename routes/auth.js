@@ -89,11 +89,8 @@ Router.get('/verify', (req, res) => {
     const token = bearerHeader.split(" ")[1]
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
         if (err) return console.log('Error in auth/: Invalid Token.');
-        // console.log('WILL SUCCESSFULLY VERIFY TOKEN FOR NAVBAR!');
         res.json({status: 200, msg: 'Successfully verified token for navbar!', userData: {_id: payload._id, username: payload.username}})
     })
-    //console.log('i found the token that the front end sent!:', token);
-
 })
 
 

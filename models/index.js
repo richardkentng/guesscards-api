@@ -1,5 +1,3 @@
-console.log('##########  MODELS/INDEX.JS  - CONNECT TO MONGOOSE ########');
-
 const mongoose = require("mongoose");
 
 const connectionString = process.env.MONGODB_URI
