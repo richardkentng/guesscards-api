@@ -7,7 +7,7 @@ const authRequired = require('../middleware/authRequired')
 Router.get('/', authRequired, (req, res) => {
 
     Set.find({}, (err, foundSets) => {
-        if (err) console.log('!!!!!!! ERROR when finding all sets', err);
+        if (err) console.log('ERROR when finding all sets', err);
 
         //filter sets by user
         const usersSets = foundSets.filter(set => {
@@ -53,7 +53,6 @@ Router.put('/:id', authRequired, async (req, res) => {
 
 //delete set
 Router.delete('/:id', authRequired, async (req, res) => {
-    console.log(' you are trying to delete a set!');
     try {
         const setToDelete = await Set.findByIdAndDelete(req.params.id)
         res.json({set: setToDelete})
@@ -77,7 +76,6 @@ Router.post('/:id/cards', authRequired, async (req, res) => {
         const foundSet =  await Set.findById(req.params.id)
         foundSet.cards.push(req.body)
         await foundSet.save()
-        console.log('created flashcard:', foundSet.cards[foundSet.cards.length - 1]);
         return res.json({card: foundSet.cards[foundSet.cards.length - 1]})
 
     } catch (error) {
@@ -99,7 +97,6 @@ Router.put('/:id/cards/:id2', authRequired, async (req, res) => {
                 break
             }
         }
-        if (cardIndex === undefined) console.log('Find set and update card. - FAILED to find card\'s index by id.');
         if (cardIndex === undefined) return res.json({msg: 'Find set and update card. - FAILED to find card\'s index by id.'})
         //update the card with req.body
         card.ques = req.body.ques
@@ -110,7 +107,6 @@ Router.put('/:id/cards/:id2', authRequired, async (req, res) => {
         await foundSet.save()
 
         res.json({card, cardIndex})
-        console.log({updatedCard: card});
 
     } catch (error) {
         res.status(500).json({error, msg: 'error trying to edit card from set'})
