@@ -57,11 +57,11 @@ Router.post('/login', async (req, res) => {
 
     //CHECK IF USERNAME ALEADY EXISTS
     const foundUser = await db.User.findOne({username})
-    if (!foundUser) return res.json({status: 400, msg: 'That username does not exist!'})
+    if (!foundUser) return res.json({status: 400, msg: 'Incorrect username or password!'})
 
     //CHECK IF PASSWORD IS CORRECT
     const checkPassword = await bcrypt.compare(password, foundUser.password)
-    if (!checkPassword) return res.json({status: 400, msg: 'The password is wrong!'})
+    if (!checkPassword) return res.json({status: 400, msg: 'Incorrect username or password!'})
 
 
     //**** RETURN A TOKEN
