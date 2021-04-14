@@ -19,14 +19,16 @@ Router.get('/', authRequired, (req, res) => {
 })
 
 //show set (shows all flashcards for set)
-Router.get('/:id', authRequired, (req, res) => {
+Router.get('/:id', authRequired, async (req, res) => {
 
-    Set.findById(req.params.id, (err, foundSet) => {
-        if (err) return res.json({msg: 'Error when trying to find specific set by id.', err})
-        if (!foundSet) return res.json({msg: 'Unable to find particular set by id.'})
-
+    //note **  responses without 'set' must contain a 'msg' prop for the frontend to display via toast.
+    try {
+        const foundSet = await Set.findById(req.params.id)
+        if (foundSet.user != req.userId) return res.status(400).json({msg: 'Permission denied to access that set!'})
         res.status(200).json({set: foundSet})
-    })
+    } catch (err) {
+        return res.status(500).json({msg: 'Failed to find set by id.', err})
+    }
 })
 
 // new set
