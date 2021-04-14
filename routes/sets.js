@@ -3,7 +3,7 @@ const Router = express.Router()
 const Set = require('../models/Set')
 const authRequired = require('../middleware/authRequired')
 
-//get all sets for user
+//all sets for user
 Router.get('/', authRequired, (req, res) => {
 
     Set.find({}, (err, foundSets) => {
@@ -18,7 +18,7 @@ Router.get('/', authRequired, (req, res) => {
     })
 })
 
-//set show page (see all cards for a set!)
+//show set (shows all flashcards for set)
 Router.get('/:id', authRequired, (req, res) => {
 
     Set.findById(req.params.id, (err, foundSet) => {
@@ -29,7 +29,7 @@ Router.get('/:id', authRequired, (req, res) => {
     })
 })
 
-// create a set
+// new set
 Router.post('/', authRequired, (req, res) => {
 
     Set.create({name: req.body.name, user: req.userId}, (err, createdSet) => {
@@ -68,7 +68,7 @@ Router.delete('/:id', authRequired, async (req, res) => {
                 FLASHCARDS
 *****************************************/
 
-//create flashcard for set
+//new flashcard for set
 Router.post('/:id/cards', authRequired, async (req, res) => {
     const {ques, ans} = req.body
     if (!ques || !ans) return res.status(400).json({msg: 'New question and answer must be non-empty string.', ques, ans})
