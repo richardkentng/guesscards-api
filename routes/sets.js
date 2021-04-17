@@ -25,7 +25,7 @@ Router.get('/:id', authRequired, async (req, res) => {
     try {
         const foundSet = await Set.findById(req.params.id)
 
-        foundSet.cards = foundSet.cards.sort((a, b) => {
+        foundSet.cards.sort((a, b) => {
             return b.createdAt - a.createdAt
         })
 
