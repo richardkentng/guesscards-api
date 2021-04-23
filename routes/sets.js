@@ -20,14 +20,10 @@ Router.get('/', authRequired, (req, res) => {
 
 //show set (shows all flashcards for set)
 Router.get('/:id', authRequired, async (req, res) => {
-
     //note **  responses without 'set' must contain a 'msg' prop for the frontend to display via toast.
     try {
         const foundSet = await Set.findById(req.params.id)
-
-        foundSet.cards.sort((a, b) => {
-            return b.createdAt - a.createdAt
-        })
+        sortByCreatedAt(foundSet.cards)
 
         if (foundSet.user != req.userId) return res.status(400).json({msg: 'Permission denied to access that set!'})
 
@@ -36,6 +32,7 @@ Router.get('/:id', authRequired, async (req, res) => {
         return res.status(500).json({msg: 'Failed to find set by id.', err})
     }
 })
+
 
 // new set
 Router.post('/', authRequired, (req, res) => {
@@ -136,6 +133,9 @@ Router.delete('/:id/cards/:id2', authRequired, async (req, res) => {
 })
 
 
+function sortByCreatedAt(arr) {
+    arr.sort((a,b) => b.createdAt - a.createdAt)
+}
 
 
 module.exports = Router
