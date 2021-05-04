@@ -1,8 +1,10 @@
 const express = require('express')
 const Router = express.Router()
-const Set = require('../models/Set')
+
 const authRequired = require('../middleware/authRequired')
+
 const {findSets, showSet, newSet, editSet, deleteSet, newFlashcard, editFlashcard, deleteFlashcard} = require('../controllers/sets')
+
 
 
 //all sets for user
