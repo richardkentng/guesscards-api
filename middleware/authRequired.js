@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
 
     //isolate token
     const token = bearerHeader.split(' ')[1]
+    //do not change value of msg.  Front end relies on it.
     if (!token) return res.status(403).json({msg: 'token does not exist in middleware'})
 
     //verify token.  pull userId out of payload

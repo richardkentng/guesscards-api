@@ -26,6 +26,7 @@ const showSet = async (req, res) => {
 
         res.status(200).json({set: foundSet})
     } catch (err) {
+        //do not change msg value!  front end relies on it.
         return res.status(500).json({msg: 'Failed to find set by id.', err})
     }
 }
