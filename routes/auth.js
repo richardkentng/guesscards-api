@@ -5,6 +5,7 @@ const { json } = require('express')
 const Router = express.Router()
 const db = require('../models')
 
+const expiresIn = '24h'
 
 
 
@@ -33,7 +34,11 @@ Router.post('/signup', async (req, res) => {
             msg: 'User has been created...yet secret is undefined. Cannot sign token for this user without secret.'
         })
 
-        const token = jwt.sign({_id: createdUser._id, username}, process.env.ACCESS_TOKEN_SECRET)
+        const token = jwt.sign(
+            {_id: createdUser._id, username}, 
+            process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn}
+            )
 
         res.json({
             status: 201,
@@ -70,7 +75,11 @@ Router.post('/login', async (req, res) => {
         msg: 'User has been found...yet secret is undefined. Cannot sign token for this user without secret.'
     })
 
-    const token = jwt.sign({_id: foundUser._id, username}, process.env.ACCESS_TOKEN_SECRET)
+    const token = jwt.sign(
+        {_id: foundUser._id, username}, 
+        process.env.ACCESS_TOKEN_SECRET, 
+        {expiresIn}
+        )
 
     res.json({
         status: 200,
@@ -83,13 +92,18 @@ Router.post('/login', async (req, res) => {
 
 
 Router.get('/verify', (req, res) => {
+    console.log('-------auth/verify accesssed --------');
     const bearerHeader = req.headers["authorization"]
     if (!bearerHeader) return res.status(400).json({msg: 'bearer header does not exist. Token cant possibly be verified.'})
 
     const token = bearerHeader.split(" ")[1]
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-        if (err) return console.log('Error in auth/: Invalid Token.');
-        res.json({status: 200, msg: 'Successfully verified token for navbar!', userData: {_id: payload._id, username: payload.username}})
+        if (err) return res.status(400).json({msg: 'Error in auth/verify. Invalid token.', err})
+        res.json({
+            status: 200, 
+            msg: 'Successfully verified token for navbar!', 
+            userData: {_id: payload._id, username: payload.username}
+        })
     })
 })
 
