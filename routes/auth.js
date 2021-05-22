@@ -92,7 +92,6 @@ Router.post('/login', async (req, res) => {
 
 
 Router.get('/verify', (req, res) => {
-    console.log('-------auth/verify accesssed --------');
     const bearerHeader = req.headers["authorization"]
     if (!bearerHeader) return res.status(400).json({msg: 'bearer header does not exist. Token cant possibly be verified.'})
 
