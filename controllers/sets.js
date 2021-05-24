@@ -100,6 +100,7 @@ const editFlashcard = async (req, res) => {
         //update the card with req.body
         card.ques = req.body.ques
         card.ans = req.body.ans
+        card.marked = req.body.marked
 
         //replace old card with updated card and save it
         foundSet.cards.splice(cardIndex, 1, card)
