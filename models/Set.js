@@ -9,6 +9,10 @@ const cardSchema = {
         type: String,
         required: true
     },
+    marked: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
