@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
     //verify token.  pull userId out of payload
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-        if (err) return res.status(400).json({ message: "Invalid token in middleware", err})
+        if (err) return res.status(400).json({ msg: "Invalid token in middleware", err})
         req.userId = payload._id
         req.username = payload.username
         next()

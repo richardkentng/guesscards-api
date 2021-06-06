@@ -97,7 +97,7 @@ Router.get('/verify', (req, res) => {
 
     const token = bearerHeader.split(" ")[1]
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
-        if (err) return res.status(400).json({msg: 'Error in auth/verify. Invalid token.', err})
+        if (err) return res.status(400).json({msg: 'Invalid token in auth/verify.', err})
         res.json({
             status: 200, 
             msg: 'Successfully verified token for navbar!', 
