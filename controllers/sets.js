@@ -12,6 +12,12 @@ const findSets = (req, res) => {
             return set.user == req.userId
         })
 
+        //alphabetize
+        usersSets.sort((a,b) => {
+            const normalize = (str) => str.trim().toLowerCase()
+            return normalize(a.name) > normalize(b.name) ? 1 : -1
+        })
+
         return res.json({sets: usersSets})
     })
 }
